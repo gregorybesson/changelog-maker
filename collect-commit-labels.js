@@ -29,6 +29,7 @@ function collectCommitLabels (list, callback) {
 
         if (issue.labels)
           commit.labels = issue.labels.map(function (label) { return label.name })
+
         next()
       }
 
