@@ -9,7 +9,7 @@
 
 **changelog-maker** is a formalisation of the [Node.js](https://github.com/nodejs/node) CHANGELOG.md entry process but flexible enough to be used on other repositories.
 
-**changelog-maker** will look at the git log of the current directory, pulling entries since the last tag. Commits with just a version number in the summary are removed, as are commits prior to, and including summaries that say `working on <version>` (this is an io.js / Node ism).
+**changelog-maker** will look at the git log of the current directory, pulling entries since the last tag. Commits with just a version number in the summary are removed, as are commits prior to, and including summaries that say `working on <version>` (this is an io.js / Node ism) (if the `--beautifier` option is used, these commits aren't removed but highlighted instead)
 
 After collecting the list of commits, any that have `PR-URL: <url>` in them are looked up on GitHub and the labels of the pull request are collected, specifically looking for labels that start with `semver` (the assumption is that `semver-minor`, `semver-major` labels are used to indicate non-patch version bumps).
 
@@ -50,6 +50,7 @@ $ npm i changelog-maker -g
 * `--quiet` do not print to `process.stdout`
 * `--all` process all commits since beginning, instead of last tag.
 * `--simple` will print a simple form, without additional Markdown cruft
+* `--beautifier` will print commits with version numbers as title
 * `--group` will reorder commits so that they are listed in groups where the `xyz:` prefix of the commit message defines the group. Commits are listed in original order _within_ group.
 * `--start-ref=<ref>` will use the given git `<ref>` as a starting point rather than the _last tag_. The `<ref>` can be anything commit-ish including a commit sha, tag, branch name. If you specify a `--start-ref` argument the commit log will not be pruned so that version commits and `working on <version>` commits are left in the list.
 * `--end-ref=<ref>` will use the given git `<ref>` as a end-point rather than the _now_. The `<ref>` can be anything commit-ish including a commit sha, tag, branch name.

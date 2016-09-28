@@ -18,6 +18,7 @@ const bl             = require('bl')
 
     , quiet          = argv.quiet || argv.q
     , simple         = argv.simple || argv.s
+    , beautifier     = argv.beautifier|| argv.b
 
     , pkg            = require('./package.json')
     , debug          = require('debug')(pkg.name)
@@ -31,7 +32,7 @@ const bl             = require('bl')
         , name: argv._[1] || (pkgId.name && stripScope(pkgId.name)) || 'node'
       }
 
-const gitcmd         = 'git log --pretty=full --since="{{sincecmd}}" --until="{{untilcmd}}"'
+const gitcmd         = 'git log --pretty=fuller --since="{{sincecmd}}" --until="{{untilcmd}}"'
     , commitdatecmd  = '$(git show -s --format=%cd `{{refcmd}}`)'
     , untilcmd       = ''
     , refcmd         = argv.a || argv.all ? 'git rev-list --max-parents=0 HEAD' : 'git rev-list --max-count=1 {{ref}}'
@@ -98,7 +99,7 @@ function onCommitList (err, list) {
       list = groupCommits(list)
 
     list = list.map(function (commit) {
-      return commitToOutput(commit, simple, ghId)
+      return commitToOutput(commit, simple, ghId, beautifier)
     })
 
     if (!quiet)
